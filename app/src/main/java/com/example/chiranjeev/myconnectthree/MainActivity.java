@@ -79,22 +79,24 @@ public class MainActivity extends AppCompatActivity {
         TextView resultAnnouncement = (TextView) findViewById(R.id.resultsTextBox);
         Button playAgain = (Button) findViewById(R.id.playButton);
 
+        boolean isDraw=isDraw();
+        boolean isWin=isWin();
 
-        if (isWin()) {
-
+        if (isWin) {
 
             String winner = lastWasYellow ? "YELLOW" : "RED";
 
             resultAnnouncement.setText(winner + " WINS");
-            resultAnnouncement.setAlpha(1);
 
-        } else if (isDraw()) {
+
+        } else if (isDraw) {
             resultAnnouncement.setText("DRAW !!");
-            resultAnnouncement.setAlpha(1);
+
         }
 
 
-        if (isWin() || isDraw()) {
+        if (isWin || isDraw) {
+            resultAnnouncement.setAlpha(1);
             resultAnnouncement.setVisibility(View.VISIBLE);
             playAgain.setVisibility(View.VISIBLE);
             somebodyWon = true;
