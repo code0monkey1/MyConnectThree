@@ -1,7 +1,9 @@
 package com.example.chiranjeev.myconnectthree;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.style.BackgroundColorSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -14,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        reset();
+        resetGame();
     }
 
     boolean lastWasYellow = false;
@@ -64,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void buttonClick(View view) {
-        reset();
+        resetGame();
     }
 
-    public void onClick(View view) {
+    public void OnCoinSlotClick(View view) {
         if (somebodyWon) return;
 
         ImageView coin = (ImageView) view;
@@ -79,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
         TextView resultAnnouncement = (TextView) findViewById(R.id.resultsTextBox);
         Button playAgain = (Button) findViewById(R.id.playButton);
 
-        boolean isDraw=isDraw();
-        boolean isWin=isWin();
+        boolean isDraw = isDraw();
+        boolean isWin = isWin();
 
         if (isWin) {
 
@@ -96,22 +98,36 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (isWin || isDraw) {
-            resultAnnouncement.setAlpha(1);
-            resultAnnouncement.setVisibility(View.VISIBLE);
-            playAgain.setVisibility(View.VISIBLE);
+            resultAnnouncement.setBackgroundColor(lastWasYellow ?Color.YELLOW:Color.RED);
+            Button resetButton = (Button) findViewById(R.id.resetButton);
+            setVisibilityOfButtonsAtStartOrEndOfGame(resultAnnouncement, playAgain, resetButton, false);
             somebodyWon = true;
         }
     }
 
+    private void setVisibilityOfButtonsAtStartOrEndOfGame(TextView resultAnnouncement, Button playAgain, Button reset, boolean whenGameStarts) {
+
+        if (whenGameStarts) {
+            resultAnnouncement.setVisibility(View.INVISIBLE);
+            playAgain.setVisibility(View.INVISIBLE);
+            reset.setVisibility(View.VISIBLE);
+        } else {
+            resultAnnouncement.setVisibility(View.VISIBLE);
+            playAgain.setVisibility(View.VISIBLE);
+            reset.setVisibility(View.INVISIBLE);
+
+        }
+    }
+
     private void setAllCoinsInvisible() {
-        android.support.v7.widget.GridLayout gridLayout =  findViewById(R.id.grid);
+        android.support.v7.widget.GridLayout gridLayout = findViewById(R.id.grid);
         for (int i = 0; i < gridLayout.getChildCount(); i++) {
             ImageView imageView = (ImageView) gridLayout.getChildAt(i);
             imageView.animate().alpha(0);
         }
     }
 
-    public void reset() {
+    public void resetGame() {
 
         somebodyWon = false;
         lastWasYellow = false;
@@ -119,9 +135,9 @@ public class MainActivity extends AppCompatActivity {
 
         TextView resultAnnouncement = (TextView) findViewById(R.id.resultsTextBox);
         Button playAgain = (Button) findViewById(R.id.playButton);
+        Button resetButton = (Button) findViewById(R.id.resetButton);
 
-        resultAnnouncement.setVisibility(View.INVISIBLE);
-        playAgain.setVisibility(View.INVISIBLE);
+        setVisibilityOfButtonsAtStartOrEndOfGame(resultAnnouncement,playAgain,resetButton,true);
         setAllCoinsInvisible();
     }
 
@@ -130,5 +146,9 @@ public class MainActivity extends AppCompatActivity {
         if (grid[index] != 0) return;
         grid[index] = lastWasYellow ? 1 : 2;
 
+    }
+
+    public void onResetButtonClick(View view) {
+        resetGame();
     }
 }
