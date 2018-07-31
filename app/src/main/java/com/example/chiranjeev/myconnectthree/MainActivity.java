@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (grid[i] == 0) return false;
         }
-        return true;
+        return (!isWin());
     }
 
 
@@ -48,9 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void coinTrickleDown(ImageView coin) {
-
-        //set image
+    private void setCoinColor(ImageView coin) {
         if (lastWasYellow) {
             coin.setImageResource(R.drawable.red);
             lastWasYellow = false;
@@ -58,10 +56,18 @@ public class MainActivity extends AppCompatActivity {
             coin.setImageResource(R.drawable.yellow);
             lastWasYellow = true;
         }
+    }
 
-        //setAnimation
+    private void performCoinTrickleDownAnimation(ImageView coin) {
         coin.setTranslationY(-1000);
         coin.animate().alpha(1).translationYBy(1000).rotationBy(1800).setDuration(300);
+
+    }
+
+    private void coinTrickleDown(ImageView coin) {
+
+        setCoinColor(coin);
+        performCoinTrickleDownAnimation(coin);
 
     }
 
@@ -69,14 +75,21 @@ public class MainActivity extends AppCompatActivity {
         resetGame();
     }
 
+    public boolean coinSlotFull(int index) {
+        return grid[index] != 0;
+    }
+
     public void OnCoinSlotClick(View view) {
         if (somebodyWon) return;
 
         ImageView coin = (ImageView) view;
+        String index = coin.getTag().toString();
+
+        if (coinSlotFull(Integer.parseInt(index))) return;
 
         coinTrickleDown(coin);
 
-        String index = coin.getTag().toString();
+
         markGridIndex(index);
         TextView resultAnnouncement = (TextView) findViewById(R.id.resultsTextBox);
         Button playAgain = (Button) findViewById(R.id.playButton);
@@ -98,7 +111,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (isWin || isDraw) {
-            resultAnnouncement.setBackgroundColor(lastWasYellow ? Color.YELLOW : Color.RED);
+            if (isDraw) resultAnnouncement.setBackgroundColor(Color.GRAY);
+            else resultAnnouncement.setBackgroundColor(lastWasYellow ? Color.YELLOW : Color.RED);
+
             Button resetButton = (Button) findViewById(R.id.resetButton);
             setVisibilityOfButtonsAtStartOrEndOfGame(resultAnnouncement, playAgain, resetButton, false);
             somebodyWon = true;
@@ -137,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void markGridIndex(String string) {
         int index = Integer.parseInt(string);
-        if (grid[index] != 0) return;
+
         grid[index] = lastWasYellow ? 1 : 2;
 
     }
