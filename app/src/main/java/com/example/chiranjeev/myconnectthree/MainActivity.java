@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (isWin || isDraw) {
-            resultAnnouncement.setBackgroundColor(lastWasYellow ?Color.YELLOW:Color.RED);
+            resultAnnouncement.setBackgroundColor(lastWasYellow ? Color.YELLOW : Color.RED);
             Button resetButton = (Button) findViewById(R.id.resetButton);
             setVisibilityOfButtonsAtStartOrEndOfGame(resultAnnouncement, playAgain, resetButton, false);
             somebodyWon = true;
@@ -107,16 +107,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void setVisibilityOfButtonsAtStartOrEndOfGame(TextView resultAnnouncement, Button playAgain, Button reset, boolean whenGameStarts) {
 
-        if (whenGameStarts) {
-            resultAnnouncement.setVisibility(View.INVISIBLE);
-            playAgain.setVisibility(View.INVISIBLE);
-            reset.setVisibility(View.VISIBLE);
-        } else {
-            resultAnnouncement.setVisibility(View.VISIBLE);
-            playAgain.setVisibility(View.VISIBLE);
-            reset.setVisibility(View.INVISIBLE);
+        resultAnnouncement.setVisibility(whenGameStarts ? View.INVISIBLE : View.VISIBLE);
+        playAgain.setVisibility(whenGameStarts ? View.INVISIBLE : View.VISIBLE);
+        reset.setVisibility(whenGameStarts ? View.VISIBLE : View.INVISIBLE);
 
-        }
     }
 
     private void setAllCoinsInvisible() {
@@ -137,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         Button playAgain = (Button) findViewById(R.id.playButton);
         Button resetButton = (Button) findViewById(R.id.resetButton);
 
-        setVisibilityOfButtonsAtStartOrEndOfGame(resultAnnouncement,playAgain,resetButton,true);
+        setVisibilityOfButtonsAtStartOrEndOfGame(resultAnnouncement, playAgain, resetButton, true);
         setAllCoinsInvisible();
     }
 
