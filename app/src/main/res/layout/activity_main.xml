@@ -192,6 +192,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:background="@android:color/holo_blue_dark"
         android:onClick="buttonClick"
         android:text="Play"
         android:visibility="invisible"
