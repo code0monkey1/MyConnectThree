@@ -75,8 +75,9 @@ public class MainActivity extends AppCompatActivity {
         resetGame();
     }
 
-    public boolean coinSlotFull(int index) {
-        return grid[index] != 0;
+    public boolean coinSlotFull(String index) {
+        int indexNum = Integer.parseInt(index);
+        return grid[indexNum] != 0;
     }
 
     public void OnCoinSlotClick(View view) {
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView coin = (ImageView) view;
         String index = coin.getTag().toString();
 
-        if (coinSlotFull(Integer.parseInt(index))) return;
+        if (coinSlotFull(index)) return;
 
         coinTrickleDown(coin);
 
@@ -150,10 +151,10 @@ public class MainActivity extends AppCompatActivity {
         setAllCoinsInvisible();
     }
 
-    private void markGridIndex(String string) {
-        int index = Integer.parseInt(string);
+    private void markGridIndex(String index) {
+        int indexNum = Integer.parseInt(index);
 
-        grid[index] = lastWasYellow ? 1 : 2;
+        grid[indexNum] = lastWasYellow ? 1 : 2;
 
     }
 
