@@ -49,13 +49,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setCoinColor(ImageView coin) {
-        if (lastWasYellow) {
-            coin.setImageResource(R.drawable.red);
-            lastWasYellow = false;
-        } else {
-            coin.setImageResource(R.drawable.yellow);
-            lastWasYellow = true;
-        }
+
+        coin.setImageResource(lastWasYellow ? R.drawable.red : R.drawable.yellow);
+
+        lastWasYellow = lastWasYellow ? false : true;
+
     }
 
     private void performCoinTrickleDownAnimation(ImageView coin) {
@@ -90,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
         coinTrickleDown(coin);
 
-
         markGridIndex(index);
+
         TextView resultAnnouncement = (TextView) findViewById(R.id.resultsTextBox);
         Button playAgain = (Button) findViewById(R.id.playButton);
 
