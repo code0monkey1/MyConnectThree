@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if (isWin || isDraw) {
-            if (isDraw) resultAnnouncement.setBackgroundColor(Color.GRAY);
+            if (isDraw) resultAnnouncement.setBackgroundColor(Color.TRANSPARENT);
             else resultAnnouncement.setBackgroundColor(lastWasYellow ? Color.YELLOW : Color.RED);
 
             Button resetButton = (Button) findViewById(R.id.resetButton);
