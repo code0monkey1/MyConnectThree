@@ -24,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     int grid[] = new int[10];
 
-    int gridWinIndices[][] = {{1, 2, 3}, {4, 5, 6}, {7, 9, 8}, {1, 4, 7}, {2, 5, 8}, {3, 6, 9}, {1, 5, 9}, {3, 5, 7}};
+    int[][] gridWinIndices = winIndices();
+
 
     public boolean isDraw() {
 
@@ -76,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean coinSlotFull(String index) {
         int indexNum = Integer.parseInt(index);
         return grid[indexNum] != 0;
+    }
+
+    private int[][] winIndices() {
+        return new int[][]{{1, 2, 3}, {4, 5, 6}, {7, 9, 8}, {1, 4, 7}, {2, 5, 8}, {3, 6, 9}, {1, 5, 9}, {3, 5, 7}};
     }
 
     public void OnCoinSlotClick(View view) {
